@@ -1,0 +1,50 @@
+
+services:
+  redpanda:
+    image: redpandadata/redpanda:latest
+    container_name: smartcity_redpanda
+    command:
+      - redpanda
+      - start
+      - --mode
+      - dev-container
+      - --smp
+      - "1"
+      - --memory
+      - "1G"
+      - --reserve-memory
+      - "0M"
+      - --overprovisioned
+      - --node-id
+      - "0"
+      - --kafka-addr
+      - internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr
+      - internal://redpanda:9092,external://localhost:19092
+    ports:
+      - "19092:19092"
+      - "19644:9644"
+    volumes:
+      - redpanda_data:/var/lib/redpanda/data
+
+  postgres:
+    image: postgis/postgis:16-3.5
+    container_name: smartcity_postgres
+    environment:
+      POSTGRES_DB: smartcity
+      POSTGRES_USER: smartcity
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smartcity -d smartcity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  redpanda_data:
+  postgres_data:
