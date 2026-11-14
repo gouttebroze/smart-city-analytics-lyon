@@ -1,0 +1,12 @@
+
+httpx
+pydantic-settings
+python-dotenv
+confluent-kafka
+psycopg[binary]
+sqlalchemy
+geoalchemy2
+pandas
+geopandas
+pytest
+ruff

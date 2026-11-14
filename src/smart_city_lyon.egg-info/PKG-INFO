@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: smart-city-lyon
+Version: 0.1.0
+Summary: Real-time Smart City Analytics platform for Lyon
+Requires-Python: >=3.12
+Requires-Dist: httpx
+Requires-Dist: pydantic-settings
+Requires-Dist: python-dotenv
+Requires-Dist: confluent-kafka
+Requires-Dist: psycopg[binary]
+Requires-Dist: sqlalchemy
+Requires-Dist: geoalchemy2
+Requires-Dist: pandas
+Requires-Dist: geopandas
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"
